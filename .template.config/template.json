@@ -1,0 +1,12 @@
+{
+  "author": "Burak Can Yukselen",
+  "classifications": [ "WebAPI" ], 
+  "name": "BCY API Template",
+  "identity": "BurakCan.WebAPITemplate.CSharp",         
+  "shortName": "BcyAPI",
+  "tags": {
+    "language": "C#"
+  },
+  "sourceName": "API.Base",
+  "preferNameDirectory": true
+}
