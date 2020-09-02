@@ -1,4 +1,4 @@
-namespace API.Base.Core.Infrastructure.Settings
+namespace API.Base.Core.Settings
 {
     public class AppSettings
     {

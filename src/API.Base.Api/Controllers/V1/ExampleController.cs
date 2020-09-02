@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using API.Base.Api.Controllers;
 using API.Base.Api.Controllers.BaseController;
@@ -12,6 +13,7 @@ namespace API.Base.Api.Controllers.V1
         [Route("info")]
         public async Task<IActionResult> Info()
         { 
+            throw new Exception("Custom Error");
             var version = HttpContext.GetRequestedApiVersion();
             return Ok(version);
         }

@@ -1,7 +1,8 @@
 using System.Reflection;
 using API.Base.Api.Extensions.ApplicationBuilderExtensions;
 using API.Base.Api.Extensions.ServiceCollectionExtensions;
-using API.Base.Core.Infrastructure.Settings;
+using API.Base.Api.Middlewares;
+using API.Base.Core.Settings;
 using API.Base.Data;
 using API.Base.Data.Connections;
 using API.Base.Realtime.Hubs;
@@ -50,6 +51,7 @@ namespace API.Base.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
@@ -58,6 +60,7 @@ namespace API.Base.Api
                 endpoints.MapControllers();
                 endpoints.MapHub<ExampleHub>("/hub/example");
             });
+            app.UseCors(config => config.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.RunSwagger(settings.Swagger.AvailableVersions);
         }
