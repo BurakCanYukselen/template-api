@@ -52,5 +52,14 @@ namespace API.Base.Api.Extensions
             });
             return services;
         }
+
+        public static IServiceCollection AddSignalRManager<THubManager, TConnection>(this IServiceCollection services)
+            where THubManager : class
+            where TConnection : class
+        {
+            services.AddSingleton<THubManager>();
+            services.AddSingleton<TConnection>();
+            return services;
+        }
     }
 }

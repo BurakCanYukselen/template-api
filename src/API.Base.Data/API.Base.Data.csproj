@@ -12,4 +12,8 @@
       <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\API.Base.Core\API.Base.Core.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -9,6 +9,7 @@ using API.Base.Core.Infrastructure;
 using API.Base.Core.Infrastructure.Settings;
 using API.Base.Data;
 using API.Base.Data.Connections;
+using API.Base.Realtime.Hubs;
 using API.Base.Service;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -42,8 +43,11 @@ namespace API.Base.Api
                 config.DefaultApiVersion = new ApiVersion(appSetting.DefaultApiVersion.MajorVersion, appSetting.DefaultApiVersion.MinorVersion);
                 config.AssumeDefaultVersionWhenUnspecified = true;
             });
+            services.AddSignalR();
+            services.AddSignalRManager<ExampleHubManager, ExampleConnection>();
 
             services.AddSwaggerDocument(appSetting.Swagger.AvailableVersions);
+
             services.AddMediatR(new Assembly[] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
 
             services.AddSingleton<IExampleDbConnection>(new ExampleDbConnection(appSetting.ConnectionStrings.ExampleDbConnection));
@@ -59,7 +63,11 @@ namespace API.Base.Api
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<ExampleHub>("/hub/example");
+            });
 
             app.UseSwaggerWithVersion(settings.Swagger.AvailableVersions);
         }
