@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Reflection;
 using API.Base.Api.Filters.Swagger;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -7,20 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace API.Base.Api.Extensions
+namespace API.Base.Api.Extensions.ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static partial class ServiceCollectionExtensions
     {
-        public static TSetting RegisterSettings<TSetting>(this IServiceCollection services, IConfiguration configuration, string sectionName)
-            where TSetting : class
-        {
-            var section = configuration.GetSection(sectionName);
-            var setting = section.Get<TSetting>();
-            services.AddSingleton(setting);
-            return setting;
-        }
-
-        public static IServiceCollection AddSwaggerDocument(this IServiceCollection services, params string[] versions)
+        public static IServiceCollection RegisterSwagger(this IServiceCollection services, params string[] versions)
         {
             services.AddSwaggerGen(config =>
             {
@@ -50,15 +40,6 @@ namespace API.Base.Api.Extensions
                     //return true;
                 });
             });
-            return services;
-        }
-
-        public static IServiceCollection AddSignalRManager<THubManager, TConnection>(this IServiceCollection services)
-            where THubManager : class
-            where TConnection : class
-        {
-            services.AddSingleton<THubManager>();
-            services.AddSingleton<TConnection>();
             return services;
         }
     }

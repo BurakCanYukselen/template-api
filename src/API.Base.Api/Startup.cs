@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using API.Base.Api.Extensions;
+using API.Base.Api.Extensions.ApplicationBuilderExtensions;
+using API.Base.Api.Extensions.ServiceCollectionExtensions;
 using API.Base.Api.Filters.Swagger;
 using API.Base.Core.Infrastructure;
 using API.Base.Core.Infrastructure.Settings;
@@ -44,13 +46,11 @@ namespace API.Base.Api
                 config.AssumeDefaultVersionWhenUnspecified = true;
             });
             services.AddSignalR();
-            services.AddSignalRManager<ExampleHubManager, ExampleConnection>();
-
-            services.AddSwaggerDocument(appSetting.Swagger.AvailableVersions);
-
             services.AddMediatR(new Assembly[] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
-
-            services.AddSingleton<IExampleDbConnection>(new ExampleDbConnection(appSetting.ConnectionStrings.ExampleDbConnection));
+            
+            services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
+            services.RegisterDbConnection<IExampleDbConnection, ExampleDbConnection>(appSetting.ConnectionStrings.ExampleDbConnection);
+            services.RegisterSignalRManager<ExampleHubManager, ExampleConnection>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppSettings settings)
@@ -69,7 +69,7 @@ namespace API.Base.Api
                 endpoints.MapHub<ExampleHub>("/hub/example");
             });
 
-            app.UseSwaggerWithVersion(settings.Swagger.AvailableVersions);
+            app.RunSwagger(settings.Swagger.AvailableVersions);
         }
     }
 }
