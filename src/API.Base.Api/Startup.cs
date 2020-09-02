@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using API.Base.Api.Extensions;
 using API.Base.Api.Extensions.ApplicationBuilderExtensions;
 using API.Base.Api.Extensions.ServiceCollectionExtensions;
-using API.Base.Api.Filters.Swagger;
-using API.Base.Core.Infrastructure;
 using API.Base.Core.Infrastructure.Settings;
 using API.Base.Data;
 using API.Base.Data.Connections;
@@ -16,13 +9,10 @@ using API.Base.Service;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace API.Base.Api
 {
