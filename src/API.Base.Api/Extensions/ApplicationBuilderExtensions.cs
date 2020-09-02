@@ -9,9 +9,10 @@ namespace API.Base.Api.Extensions
             app.UseSwagger();
             app.UseSwaggerUI(config =>
             {
+                var docName = typeof(ServiceCollectionExtensions).Module.Name.Replace(".Api.dll", string.Empty);
                 foreach (var version in versions)
                 {
-                    config.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"Garsoniyer.API.Base {version}");
+                    config.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"{docName} {version}");
                 }
             });
 

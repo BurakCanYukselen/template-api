@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Reflection;
 using API.Base.Api.Filters.Swagger;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -23,11 +24,12 @@ namespace API.Base.Api.Extensions
         {
             services.AddSwaggerGen(config =>
             {
+                var docName = typeof(ServiceCollectionExtensions).Module.Name.Replace(".Api.dll", string.Empty);
                 foreach (var version in versions)
                 {
                     config.SwaggerDoc(version, new OpenApiInfo
                     {
-                        Title = $"Garsoniyer.API.Base {version}",
+                        Title = $"{docName} {version}",
                         Version = version
                     });
                 }

@@ -8,6 +8,7 @@ using API.Base.Api.Filters.Swagger;
 using API.Base.Core.Infrastructure;
 using API.Base.Core.Infrastructure.Settings;
 using API.Base.Data;
+using API.Base.Data.Connections;
 using API.Base.Service;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -43,11 +44,9 @@ namespace API.Base.Api
             });
 
             services.AddSwaggerDocument(appSetting.Swagger.AvailableVersions);
-            services.AddMediatR(new Assembly[]
-            {
-                typeof(DataStartUp).Assembly,
-                typeof(ServiceStartup).Assembly,
-            });
+            services.AddMediatR(new Assembly[] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
+
+            services.AddSingleton<IExampleDbConnection>(new ExampleDbConnection(appSetting.ConnectionStrings.ExampleDbConnection));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppSettings settings)
