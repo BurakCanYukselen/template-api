@@ -2,11 +2,13 @@ using System.Reflection;
 using API.Base.Api.Extensions.ApplicationBuilderExtensions;
 using API.Base.Api.Extensions.ServiceCollectionExtensions;
 using API.Base.Api.Middlewares;
+using API.Base.Core.Behaviors;
 using API.Base.Core.Settings;
 using API.Base.Data;
 using API.Base.Data.Connections;
 using API.Base.Realtime.Hubs;
 using API.Base.Service;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,8 +39,10 @@ namespace API.Base.Api
                 config.AssumeDefaultVersionWhenUnspecified = true;
             });
             services.AddSignalR();
-            services.AddMediatR(new Assembly[] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
-            
+            services.AddMediatR(new [] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
+            services.AddValidatorsFromAssemblies(new[] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
             services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
             services.RegisterDbConnection<IExampleDbConnection, ExampleDbConnection>(appSetting.ConnectionStrings.ExampleDbConnection);
             services.RegisterSignalRManager<ExampleHubManager, ExampleConnection>();
@@ -54,13 +58,13 @@ namespace API.Base.Api
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors(config => config.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ExampleHub>("/hub/example");
             });
-            app.UseCors(config => config.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.RunSwagger(settings.Swagger.AvailableVersions);
         }

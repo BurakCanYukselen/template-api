@@ -23,7 +23,7 @@ namespace API.Base.Core.Extensions
                 innerException = innerException.InnerException;
             }
 
-            return new ApiResponse<ErrorModel>(error);
+            return new ApiResponse<ErrorModel>(error) {Success = false};
         }
     }
 }

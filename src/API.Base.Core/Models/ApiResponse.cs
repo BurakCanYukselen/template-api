@@ -1,11 +1,6 @@
 namespace API.Base.Core.Models
 {
-    public class ApiResponse
-    {
-        public bool Success { get; set; }
-    }
-
-    public class ApiResponse<TData> : ApiResponse
+    public class ApiResponse<TData> : BaseResponse
     {
         public TData Result { get; }
 

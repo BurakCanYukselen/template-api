@@ -1,7 +1,11 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using API.Base.Api.Controllers;
 using API.Base.Api.Controllers.BaseController;
+using API.Base.Core.Models;
+using API.Base.Service;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Base.Api.Controllers.V1
@@ -9,13 +13,20 @@ namespace API.Base.Api.Controllers.V1
     [ApiVersion("1")]
     public class ExampleController: BaseApiController
     {
+        public ExampleController(IMediator mediator) : base(mediator)
+        {
+        }
+        
         [HttpGet]
-        [Route("info")]
-        public async Task<IActionResult> Info()
+        [Route("example-api-endpoint")]
+        [ProducesResponseType(typeof(ApiResponse<string>), (int) HttpStatusCode.OK)]
+        public async Task<IActionResult> ExampleApiEndpoint()
         { 
-            throw new Exception("Custom Error");
-            var version = HttpContext.GetRequestedApiVersion();
-            return Ok(version);
+            var serviceResponse = await _mediator.Send(new ExampleServiceRequest()
+            {
+                Id = Guid.NewGuid(),
+            });
+            return Ok(serviceResponse);
         }
     }
 }
