@@ -7,12 +7,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace API.Base.Api.Middlewares
 {
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger _logger = Log.ForContext<ExceptionMiddleware>();
 
         public ExceptionMiddleware(RequestDelegate next)
         {
@@ -44,7 +48,8 @@ namespace API.Base.Api.Middlewares
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
                 var error = exception.ToApiResponse();
-
+                this._logger.Error(exception, error.ToJson());
+                
                 if (env.IsProduction())
                     return;
 
