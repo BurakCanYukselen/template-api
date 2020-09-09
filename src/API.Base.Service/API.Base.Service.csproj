@@ -5,9 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\API.Base.Realtime\API.Base.Realtime.csproj" />
       <ProjectReference Include="..\API.Base.Core\API.Base.Core.csproj" />
       <ProjectReference Include="..\API.Base.Data\API.Base.Data.csproj" />
+      <ProjectReference Include="..\API.Base.Realtime\API.Base.Realtime.csproj" />
     </ItemGroup>
 
     <ItemGroup>
