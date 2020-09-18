@@ -1,4 +1,3 @@
-using System.Reflection;
 using API.Base.Api.Extensions.ApplicationBuilderExtensions;
 using API.Base.Api.Extensions.ServiceCollectionExtensions;
 using API.Base.Api.Middlewares;
@@ -16,6 +15,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
 namespace API.Base.Api
 {
@@ -33,22 +34,21 @@ namespace API.Base.Api
             var appSetting = services.RegisterSettings<AppSettings>(Configuration, "AppSettings");
 
             services.AddControllers();
-            services.AddApiVersioning(config =>
-            {
-                config.DefaultApiVersion = new ApiVersion(appSetting.DefaultApiVersion.MajorVersion, appSetting.DefaultApiVersion.MinorVersion);
-                config.AssumeDefaultVersionWhenUnspecified = true;
-            });
             services.AddSignalR();
             services.AddMediatR(new [] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
             services.AddValidatorsFromAssemblies(new[] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            // For Api Gateway Service
+            // services.AddOcelot();
 
+            services.RegisterApiVersioning(appSetting.DefaultApiVersion.MajorVersion, appSetting.DefaultApiVersion.MinorVersion);
+            services.RegisterJwtBearerAuthentication("AuthUser", appSetting.ApplicationSecret);
             services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
             services.RegisterDbConnection<IExampleDbConnection, ExampleDbConnection>(appSetting.ConnectionStrings.ExampleDbConnection);
             services.RegisterSignalRManager<ExampleHubManager, ExampleConnection>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppSettings settings)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppSettings settings)
         {
             if (env.IsDevelopment())
             {
@@ -59,13 +59,15 @@ namespace API.Base.Api
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors(config => config.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ExampleHub>("/hub/example");
             });
-
+            // For Api Gateway Service
+            // await app.UseOcelot();
             app.RunSwagger(settings.Swagger.AvailableVersions);
         }
     }
