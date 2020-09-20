@@ -44,6 +44,8 @@ namespace API.Base.Api
             services.RegisterApiVersioning(appSetting.DefaultApiVersion.MajorVersion, appSetting.DefaultApiVersion.MinorVersion);
             services.RegisterJwtBearerAuthentication("AuthUser", appSetting.ApplicationSecret);
             services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
+            services.RegisterAutoMapper();
+
             services.RegisterDbConnection<IExampleDbConnection, ExampleDbConnection>(appSetting.ConnectionStrings.ExampleDbConnection);
             services.RegisterSignalRManager<ExampleHubManager, ExampleConnection>();
         }
