@@ -40,7 +40,6 @@ namespace API.Base.Api.Middlewares
                     error.Result.StackTrace = null;
                 
                 await context.WriteResultAsync(new ObjectResult(error));
-                return;
             }
             catch (Exception exception)
             {
