@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Base.Service", "src\API
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Base.Realtime", "src\API.Base.Realtime\API.Base.Realtime.csproj", "{51DAFE37-689B-4707-AB4B-B242ECFE3307}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Base.External", "src\API.Base.External\API.Base.External.csproj", "{B7104791-CCA9-4B7E-8D03-290EC5DACFF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{51DAFE37-689B-4707-AB4B-B242ECFE3307}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51DAFE37-689B-4707-AB4B-B242ECFE3307}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51DAFE37-689B-4707-AB4B-B242ECFE3307}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7104791-CCA9-4B7E-8D03-290EC5DACFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7104791-CCA9-4B7E-8D03-290EC5DACFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7104791-CCA9-4B7E-8D03-290EC5DACFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7104791-CCA9-4B7E-8D03-290EC5DACFF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
