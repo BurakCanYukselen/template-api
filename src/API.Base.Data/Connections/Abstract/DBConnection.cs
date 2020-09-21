@@ -4,6 +4,7 @@ namespace API.Base.Data.Connections.Abstract
 {
     public interface IDBConnection
     {
+        IDBOperatable DB { get; }
         SqlConnection GetConnection();
     }
     
