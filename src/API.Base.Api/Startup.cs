@@ -5,6 +5,7 @@ using API.Base.Core.Behaviors;
 using API.Base.Core.Settings;
 using API.Base.Data;
 using API.Base.Data.Connections;
+using API.Base.External;
 using API.Base.Realtime.Hubs;
 using API.Base.Service;
 using FluentValidation;
@@ -46,6 +47,7 @@ namespace API.Base.Api
             services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
             services.RegisterAutoMapper();
 
+            services.RegisterExternalService<IExampleExternalService, ExampleExternalService, ExampleExternalServiceHttpClient>(appSetting.ExternalServices.ExampleExternalService);
             services.RegisterDbConnection<IExampleDbConnection, ExampleDbConnection>(appSetting.ConnectionStrings.ExampleDbConnection);
             services.RegisterSignalRManager<ExampleHubManager, ExampleConnection>();
         }

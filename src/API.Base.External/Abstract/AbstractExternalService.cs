@@ -87,4 +87,13 @@ namespace API.Base.External.Abstract
             return content;
         }
     }
+    
+    public abstract class AbstractExternalService
+    {
+        protected AbstractHttpClient Client { get; }
+        public AbstractExternalService(AbstractHttpClient client)
+        {
+            Client = client;
+        }
+    }
 }
