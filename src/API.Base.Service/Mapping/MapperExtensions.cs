@@ -14,5 +14,12 @@ namespace API.Base.Service.Mapping
             var mappedObject = _mapper.Map<TDestination>(source);
             return mappedObject;
         }
+        
+        public static IMappingExpression<TSource, TDestination> IgnoreUnmapped<TSource, TDestination>(
+            this IMappingExpression<TSource,TDestination> mapper)
+        {
+            mapper.ForAllOtherMembers(p=> p.Ignore());
+            return mapper;
+        }
     }
 }
