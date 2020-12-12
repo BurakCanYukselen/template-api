@@ -1,8 +1,8 @@
 using System;
+using API.Base.Api.Extensions.ServiceCollectionExtensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Ocelot.DependencyInjection;
 using Serilog;
 
 namespace API.Base.Api

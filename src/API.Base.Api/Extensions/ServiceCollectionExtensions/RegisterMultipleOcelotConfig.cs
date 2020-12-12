@@ -8,13 +8,14 @@ using Ocelot.DependencyInjection;
 
 namespace API.Base.Api.Extensions.ServiceCollectionExtensions
 {
-     public static partial class ConfigurationBuilderExtension
+    public static partial class ConfigurationBuilderExtension
     {
         private const string OCELOT_FILE_NAME = "ocelot.merged.json";
 
         public static IConfigurationBuilder RegisterMultipleOcelotConfig(this IConfigurationBuilder builder, string relativePath,
             IWebHostEnvironment env)
         {
+            DeleteExistingMergedConfigurationFile(relativePath);
             var routes = MergeConfigs(relativePath);
             SaveMergedConfigurationFile(routes, relativePath);
             builder.AddOcelot(relativePath, env);
@@ -43,11 +44,21 @@ namespace API.Base.Api.Extensions.ServiceCollectionExtensions
             return routes;
         }
 
+        public static void DeleteExistingMergedConfigurationFile(string relativePath)
+        {
+            var path = relativePath.GetTargetPath();
+            var filePath = Path.Join(path, OCELOT_FILE_NAME);
+
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+        }
+
         public static void SaveMergedConfigurationFile(IEnumerable<dynamic> routes, string relativePath)
         {
             var path = relativePath.GetTargetPath();
             var jsonObject = new {Routes = routes};
-            File.WriteAllText(@$"{path}\{OCELOT_FILE_NAME}", Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject));
+            var filePath = Path.Join(path, OCELOT_FILE_NAME);
+            File.WriteAllText(filePath, Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject));
         }
     }
 }
