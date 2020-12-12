@@ -30,13 +30,13 @@ namespace API.Base.Api
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             var appSetting = services.RegisterSettings<AppSettings>(Configuration, "AppSettings");
 
             services.AddControllers();
             services.AddSignalR();
-            services.AddMediatR(new [] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
+            services.AddMediatR(new[] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
             services.AddValidatorsFromAssemblies(new[] {typeof(DataStartUp).Assembly, typeof(ServiceStartup).Assembly});
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             // For Api Gateway Service
@@ -44,8 +44,10 @@ namespace API.Base.Api
 
             services.RegisterApiVersioning(appSetting.DefaultApiVersion.MajorVersion, appSetting.DefaultApiVersion.MinorVersion);
             services.RegisterJwtBearerAuthentication("AuthUser", appSetting.ApplicationSecret);
-            services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
             services.RegisterAutoMapper();
+
+            if (!env.IsProduction())
+                services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
 
             services.RegisterExternalService<IExampleExternalService, ExampleExternalService, ExampleExternalServiceHttpClient>(appSetting.ExternalServices.ExampleExternalService);
             services.RegisterDbConnection<IExampleDbConnection, ExampleDbConnection>(appSetting.ConnectionStrings.ExampleDbConnection);
@@ -72,7 +74,8 @@ namespace API.Base.Api
             });
             // For Api Gateway Service
             // await app.UseOcelot();
-            app.RunSwagger(settings.Swagger.AvailableVersions);
+            if (!env.IsProduction())
+                app.RunSwagger(settings.Swagger.AvailableVersions);
         }
     }
 }

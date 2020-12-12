@@ -13,6 +13,7 @@ namespace API.Base.Api.Extensions.ApplicationBuilderExtensions
                 foreach (var version in versions)
                 {
                     config.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"{docName} {version}");
+                    config.RoutePrefix = string.Empty;
                 }
             });
 
