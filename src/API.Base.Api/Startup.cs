@@ -32,7 +32,7 @@ namespace API.Base.Api
         public IConfiguration Configuration { get; }
         public IHostEnvironment Environment { get; }
 
-        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             var appSetting = services.RegisterSettings<AppSettings>(Configuration, "AppSettings");
 
