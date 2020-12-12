@@ -23,12 +23,14 @@ namespace API.Base.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
@@ -46,7 +48,7 @@ namespace API.Base.Api
             services.RegisterJwtBearerAuthentication("AuthUser", appSetting.ApplicationSecret);
             services.RegisterAutoMapper();
 
-            if (!env.IsProduction())
+            if (!Environment.IsProduction())
                 services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
 
             services.RegisterExternalService<IExampleExternalService, ExampleExternalService, ExampleExternalServiceHttpClient>(appSetting.ExternalServices.ExampleExternalService);
@@ -54,9 +56,9 @@ namespace API.Base.Api
             services.RegisterSignalRManager<ExampleHubManager, ExampleConnection>();
         }
 
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppSettings settings)
+        public async void Configure(IApplicationBuilder app, AppSettings settings)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -74,7 +76,7 @@ namespace API.Base.Api
             });
             // For Api Gateway Service
             // await app.UseOcelot();
-            if (!env.IsProduction())
+            if (!Environment.IsProduction())
                 app.RunSwagger(settings.Swagger.AvailableVersions);
         }
     }
