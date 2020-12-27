@@ -16,7 +16,7 @@ namespace API.Base.Core.Extensions
             while (innerException != null)
             {
                 if (!string.IsNullOrEmpty(innerException.Message))
-                    error.AddErrorMessage(exception.Message);
+                    error.AddErrorMessage(innerException.Message);
 
                 innerException = innerException.InnerException;
             }
