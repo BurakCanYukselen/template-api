@@ -1,3 +1,4 @@
+using API.Base.Data;
 using AutoMapper;
 
 namespace API.Base.Service
@@ -6,10 +7,9 @@ namespace API.Base.Service
     {
         public static IMapper MapperInitialize()
         {
-            var configuration = new MapperConfiguration(config =>
-            {
-            });
-
+            DataStartUp.InitializeFluentMapping();
+            
+            var configuration = new MapperConfiguration(config => { });
             configuration.AssertConfigurationIsValid();
             return configuration.CreateMapper();
         }

@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using API.Base.Core.Extensions;
-using API.Base.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,12 +13,12 @@ namespace API.Base.Api.Controllers.BaseController
         {
             _mediator = mediator;
         }
-        
+
         public override OkObjectResult Ok(object value)
         {
             return base.Ok(value.ToApiResponse(true));
         }
-        
+
         protected string GetFromRoute(string routeObjectName) => (string) HttpContext.Request.RouteValues[routeObjectName];
     }
 }

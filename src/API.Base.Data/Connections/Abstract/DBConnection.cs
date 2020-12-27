@@ -7,8 +7,8 @@ namespace API.Base.Data.Connections.Abstract
         IDBOperatable DB { get; }
         SqlConnection GetConnection();
     }
-    
-    public abstract class DBConnection: IDBConnection
+
+    public abstract class DBConnection : IDBConnection
     {
         private readonly string _connectionString;
         public IDBOperatable DB { get; }
@@ -21,7 +21,7 @@ namespace API.Base.Data.Connections.Abstract
 
         public SqlConnection GetConnection()
         {
-            return new SqlConnection(this._connectionString);
+            return new SqlConnection(_connectionString);
         }
     }
 }

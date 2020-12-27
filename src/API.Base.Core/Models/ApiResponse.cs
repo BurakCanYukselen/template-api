@@ -10,7 +10,7 @@ namespace API.Base.Core.Models
         }
 
         public ApiResponse()
-        { 
+        {
         }
     }
 }

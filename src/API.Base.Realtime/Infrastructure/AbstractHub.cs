@@ -20,7 +20,7 @@ namespace API.Base.Realtime.Infrastructure
             var userid = Context.GetContextHeaderValue("userid");
             var connectionKey = userid.ConvertTo<TConnectionKey>();
             _connections.Add(connectionKey, Context.ConnectionId);
-            
+
             return base.OnConnectedAsync();
         }
 

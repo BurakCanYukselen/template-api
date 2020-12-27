@@ -9,7 +9,7 @@ namespace API.Base.Core.Extensions
         {
             return JsonConvert.SerializeObject(source);
         }
-        
+
         public static string ToJson(this object source, JsonSerializerSettings settings)
         {
             return JsonConvert.SerializeObject(source, settings);

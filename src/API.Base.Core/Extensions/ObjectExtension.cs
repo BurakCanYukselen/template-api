@@ -1,4 +1,3 @@
-using System;
 using API.Base.Core.Models;
 
 namespace API.Base.Core.Extensions

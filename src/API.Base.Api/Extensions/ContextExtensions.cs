@@ -18,6 +18,5 @@ namespace API.Base.Api.Extensions
 
             return executor.ExecuteAsync(actionContext, result);
         }
-        
     }
 }

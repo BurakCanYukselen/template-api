@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Text;
 using API.Base.Core.Models;
 
 namespace API.Base.Core.Extensions

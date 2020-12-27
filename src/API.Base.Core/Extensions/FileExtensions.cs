@@ -1,5 +1,6 @@
 using System.IO;
 using Microsoft.Extensions.FileProviders;
+using Newtonsoft.Json;
 
 namespace API.Base.Core.Extensions
 {
@@ -36,10 +37,9 @@ namespace API.Base.Core.Extensions
         public static dynamic GetJsonContent(this string path)
         {
             var fileContent = File.ReadAllText(path);
-            var dynamicObject = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(fileContent);
+            var dynamicObject = JsonConvert.DeserializeObject<dynamic>(fileContent);
             var route = dynamicObject.Routes.First;
             return route;
         }
-
     }
 }

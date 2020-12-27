@@ -1,7 +1,6 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using API.Base.Api.Controllers;
 using API.Base.Api.Controllers.BaseController;
 using API.Base.Core.Models;
 using API.Base.Service;

@@ -29,14 +29,14 @@ namespace API.Base.Data.Connections.Abstract
 
         public Task<int> ExecuteAsnyc(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null) =>
             Using(() => _connection.GetConnection(), conn => conn.ExecuteAsync(sql, param, transaction, commandTimeout, commandType));
-        
-        public Task<IEnumerable<TResult>> QueryAsync<TResult> (string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null) =>
+
+        public Task<IEnumerable<TResult>> QueryAsync<TResult>(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null) =>
             Using(() => _connection.GetConnection(), conn => conn.QueryAsync<TResult>(sql, param, transaction, commandTimeout, commandType));
 
-        public Task<SqlMapper.GridReader> QueryMultipleAsync (string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null) =>
+        public Task<SqlMapper.GridReader> QueryMultipleAsync(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null) =>
             Using(() => _connection.GetConnection(), conn => conn.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType));
 
-        public Task<TResult> ExecuteScalarAsync<TResult> (string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null) =>
+        public Task<TResult> ExecuteScalarAsync<TResult>(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null) =>
             Using(() => _connection.GetConnection(), conn => conn.ExecuteScalarAsync<TResult>(sql, param, transaction, commandTimeout, commandType));
 
         private static async Task<TResult> Using<TDisposable, TResult>(Func<TDisposable> factory, Func<TDisposable, Task<TResult>> map)

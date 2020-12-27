@@ -20,14 +20,14 @@ namespace API.Base.External.Abstract
 
         public AbstractHttpClient(string url)
         {
-            this.BaseAddress = new Uri(url);
+            BaseAddress = new Uri(url);
         }
 
         public async Task<ExternalServiceResponse<TData>> GetAsync<TData>(string endpoint)
         {
             var result = new ExternalServiceResponse<TData>();
             var response = await base.GetAsync(endpoint);
-            
+
             result.IsSuccess = response.IsSuccessStatusCode;
             if (!response.IsSuccessStatusCode)
                 return result;
@@ -44,7 +44,7 @@ namespace API.Base.External.Abstract
             result.IsSuccess = response.IsSuccessStatusCode;
             if (!response.IsSuccessStatusCode)
                 return result;
-            
+
             return await GetObjectFromHttpMessage(result, response);
         }
 
@@ -57,7 +57,7 @@ namespace API.Base.External.Abstract
             result.IsSuccess = response.IsSuccessStatusCode;
             if (!response.IsSuccessStatusCode)
                 return result;
-            
+
             return await GetObjectFromHttpMessage(result, response);
         }
 
@@ -69,7 +69,7 @@ namespace API.Base.External.Abstract
             result.IsSuccess = response.IsSuccessStatusCode;
             if (!response.IsSuccessStatusCode)
                 return result;
-            
+
             return await GetObjectFromHttpMessage(result, response);
         }
 
@@ -79,18 +79,19 @@ namespace API.Base.External.Abstract
             result.Data = responseContent.FromJson<TData>();
             return result;
         }
-        
+
         private StringContent GetJsonSerializedStringContent<TData>(TData data)
         {
-            var serializedData = data.ToJson(this._serializerSettings);
-            var content = new StringContent(serializedData, this.Encoding, "application/json");
+            var serializedData = data.ToJson(_serializerSettings);
+            var content = new StringContent(serializedData, Encoding, "application/json");
             return content;
         }
     }
-    
+
     public abstract class AbstractExternalService
     {
         protected AbstractHttpClient Client { get; }
+
         public AbstractExternalService(AbstractHttpClient client)
         {
             Client = client;

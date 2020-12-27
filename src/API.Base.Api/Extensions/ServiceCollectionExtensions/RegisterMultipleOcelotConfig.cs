@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using API.Base.Core.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Ocelot.DependencyInjection;
 
 namespace API.Base.Api.Extensions.ServiceCollectionExtensions
@@ -58,7 +59,7 @@ namespace API.Base.Api.Extensions.ServiceCollectionExtensions
             var path = relativePath.GetTargetPath();
             var jsonObject = new {Routes = routes};
             var filePath = Path.Join(path, OCELOT_FILE_NAME);
-            File.WriteAllText(filePath, Newtonsoft.Json.JsonConvert.SerializeObject(jsonObject));
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonObject));
         }
     }
 }

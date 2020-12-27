@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using ILogger = Serilog.ILogger;
 
 namespace API.Base.Api.Middlewares
 {
@@ -46,7 +44,7 @@ namespace API.Base.Api.Middlewares
                 context.Response.Clear();
 
                 var error = exception.ToApiResponse();
-                this._logger.Error(exception, error.ToJson());
+                _logger.Error(exception, error.ToJson());
 
                 if (env.IsProduction())
                     return;
