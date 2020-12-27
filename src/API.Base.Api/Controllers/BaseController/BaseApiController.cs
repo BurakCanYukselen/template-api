@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Base.Api.Controllers.BaseController
 {
     [ApiController]
-    [Route("v{version:apiVersion}/[controller]")]
     public abstract class BaseApiController : ControllerBase
     {
         protected readonly IMediator _mediator;
@@ -21,5 +20,7 @@ namespace API.Base.Api.Controllers.BaseController
         {
             return base.Ok(value.ToApiResponse(true));
         }
+        
+        protected string GetFromRoute(string routeObjectName) => (string) HttpContext.Request.RouteValues[routeObjectName];
     }
 }

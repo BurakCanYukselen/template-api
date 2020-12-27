@@ -6,7 +6,7 @@ namespace API.Base.Core.Extensions
 {
     public static class TransactionHelper
     {
-        public static async Task CreateAsyncTransactionScope(Func<Task> action, Func<Exception,Task> onError = null)
+        public static async Task<bool> CreateAsyncTransactionScope(Func<Task<bool>> action, Func<Exception, Task> onError = null)
         {
             var transactionOption = new TransactionOptions
             {
@@ -18,13 +18,16 @@ namespace API.Base.Core.Extensions
             {
                 using (var transaction = new TransactionScope(TransactionScopeOption.Required, transactionOption, TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await action.Invoke();
-                    transaction.Complete();
+                    var result = await action.Invoke();
+                    if (result)
+                        transaction.Complete();
+                    return result;
                 }
             }
             catch (Exception exception)
             {
-                await onError?.Invoke(exception);
+                if (onError != null) await onError.Invoke(exception);
+                throw;
             }
         }
     }

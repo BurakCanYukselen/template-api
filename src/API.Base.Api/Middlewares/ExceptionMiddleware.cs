@@ -32,27 +32,27 @@ namespace API.Base.Api.Middlewares
             catch (ValidationException exception)
             {
                 context.Response.Clear();
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
                 var error = exception.ToApiResponse();
 
-                if (env.IsDevelopment())
+                if (env.IsProduction())
                     error.Result.StackTrace = null;
-                
-                await context.WriteResultAsync(new ObjectResult(error));
+
+                var result = new BadRequestObjectResult(error);
+                await context.WriteResultAsync(result);
             }
             catch (Exception exception)
             {
                 context.Response.Clear();
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
                 var error = exception.ToApiResponse();
                 this._logger.Error(exception, error.ToJson());
-                
+
                 if (env.IsProduction())
                     return;
 
-                await context.WriteResultAsync(new ObjectResult(error));
+                var result = new BadRequestObjectResult(error);
+                await context.WriteResultAsync(result);
             }
         }
     }
