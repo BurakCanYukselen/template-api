@@ -8,7 +8,7 @@ namespace API.Base.Data.RequestModels.Base
 
         public AbstractEntity()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
         }
     }
 }
