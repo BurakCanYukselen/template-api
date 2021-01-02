@@ -24,9 +24,8 @@ namespace API.Base.Core.Behaviors
                 var context = new ValidationContext<TRequest>(request);
                 var validationResult = await Task.WhenAll(_validators.Select(p => p.ValidateAsync(context, cancellationToken)));
                 var failures = validationResult.SelectMany(p => p.Errors).Where(p => p != null).ToList();
-                var failureMessages = string.Join(Environment.NewLine, failures.Select(p => p.ErrorMessage));
-                if (failures.Any())
-                    throw new ValidationException(failureMessages, failures, false);
+                if(failures.Any())
+                    throw new ValidationException(failures);
             }
 
             return await next();

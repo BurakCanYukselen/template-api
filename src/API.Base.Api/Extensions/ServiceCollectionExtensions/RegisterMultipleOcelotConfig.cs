@@ -17,19 +17,19 @@ namespace API.Base.Api.Extensions.ServiceCollectionExtensions
             IWebHostEnvironment env)
         {
             DeleteExistingMergedConfigurationFile(relativePath);
-            var routes = MergeConfigs(relativePath);
+            var routes = MergeConfigs(relativePath, env.EnvironmentName);
             SaveMergedConfigurationFile(routes, relativePath);
             builder.AddOcelot(relativePath, env);
             return builder;
         }
 
-        public static IEnumerable<dynamic> MergeConfigs(string relativePath)
+        public static IEnumerable<dynamic> MergeConfigs(string relativePath, string environment)
         {
             var routes = new List<dynamic>();
 
             var files = relativePath.GetFilesInLocation();
             foreach (var file in files)
-                if (Regex.IsMatch(file, "ocelot.([a-zA-Z0-9]*).json"))
+                if (Regex.IsMatch(file, $"ocelot.([a-zA-Z0-9]*).{environment}.json"))
                 {
                     var route = file.GetJsonContent();
                     routes.Add(route);
@@ -39,7 +39,7 @@ namespace API.Base.Api.Extensions.ServiceCollectionExtensions
             foreach (var directory in directories)
             {
                 var nextRelativePath = directory.GetRelativePath(relativePath);
-                routes.AddRange(MergeConfigs(nextRelativePath));
+                routes.AddRange(MergeConfigs(nextRelativePath, environment));
             }
 
             return routes;
