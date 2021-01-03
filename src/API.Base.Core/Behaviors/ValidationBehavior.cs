@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -24,7 +23,7 @@ namespace API.Base.Core.Behaviors
                 var context = new ValidationContext<TRequest>(request);
                 var validationResult = await Task.WhenAll(_validators.Select(p => p.ValidateAsync(context, cancellationToken)));
                 var failures = validationResult.SelectMany(p => p.Errors).Where(p => p != null).ToList();
-                if(failures.Any())
+                if (failures.Any())
                     throw new ValidationException(failures);
             }
 

@@ -8,7 +8,7 @@ namespace API.Base.Service
         public static IMapper MapperInitialize()
         {
             DataStartUp.InitializeFluentMapping();
-            
+
             var configuration = new MapperConfiguration(config => { });
             configuration.AssertConfigurationIsValid();
             return configuration.CreateMapper();
