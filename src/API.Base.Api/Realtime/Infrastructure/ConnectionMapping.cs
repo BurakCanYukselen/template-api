@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace API.Base.Realtime.Infrastructure
+namespace API.Base.Api.Realtime.Infrastructure
 {
     public class ConnectionMapping<TKey>
     {

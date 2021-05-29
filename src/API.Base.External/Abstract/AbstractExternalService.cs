@@ -16,12 +16,12 @@ namespace API.Base.External.Abstract
             DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind,
         };
 
-        protected virtual Encoding Encoding => Encoding.UTF8;
-
         public AbstractHttpClient(string url)
         {
             BaseAddress = new Uri(url);
         }
+
+        protected virtual Encoding Encoding => Encoding.UTF8;
 
         public async Task<ExternalServiceResponse<TData>> GetAsync<TData>(string endpoint)
         {
@@ -90,11 +90,11 @@ namespace API.Base.External.Abstract
 
     public abstract class AbstractExternalService
     {
-        protected AbstractHttpClient Client { get; }
-
         public AbstractExternalService(AbstractHttpClient client)
         {
             Client = client;
         }
+
+        protected AbstractHttpClient Client { get; }
     }
 }

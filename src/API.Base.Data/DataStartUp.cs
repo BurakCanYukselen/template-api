@@ -1,12 +1,12 @@
-using Dapper.FluentMap;
+using API.Base.Data.Dapper.Mapping;
 
 namespace API.Base.Data
 {
     public class DataStartUp
     {
-        public static void InitializeFluentMapping()
+        public static void Setup()
         {
-            FluentMapper.Initialize(cfg => { });
+            Mapper.InitializeFluentMapping();
         }
     }
 }

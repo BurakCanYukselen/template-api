@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using API.Base.Api.Realtime.Extensions;
 using API.Base.Core.Extensions;
-using API.Base.Realtime.Extensions;
 using Microsoft.AspNetCore.SignalR;
 
-namespace API.Base.Realtime.Infrastructure
+namespace API.Base.Api.Realtime.Infrastructure
 {
     public abstract class AbstractHub<TConnectionKey> : Hub
     {

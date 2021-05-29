@@ -4,7 +4,7 @@ using System.Data;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace API.Base.Data.Connections.Abstract
+namespace API.Base.Data.Dapper.Abstract
 {
     public interface IDBOperatable
     {
@@ -17,12 +17,12 @@ namespace API.Base.Data.Connections.Abstract
 
     public class DBOperatable : IDBOperatable
     {
-        private IDBConnection _connection { get; set; }
-
         public DBOperatable(IDBConnection connection)
         {
             _connection = connection;
         }
+
+        private IDBConnection _connection { get; set; }
 
         public Task<TResult> QueryFirstOrDefaultAsync<TResult>(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null) =>
             Using(() => _connection.GetConnection(), conn => conn.QueryFirstOrDefaultAsync<TResult>(sql, param, transaction, commandTimeout, commandType));

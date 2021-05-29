@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 
-namespace API.Base.Realtime.Extensions
+namespace API.Base.Api.Realtime.Extensions
 {
     public static class ContextExtensions
     {

@@ -2,7 +2,7 @@ using System.IO;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json;
 
-namespace API.Base.Core.Extensions
+namespace API.Base.Api.Extensions
 {
     public static class FileExtensions
     {
@@ -38,7 +38,7 @@ namespace API.Base.Core.Extensions
         {
             var fileContent = File.ReadAllText(path);
             var dynamicObject = JsonConvert.DeserializeObject<dynamic>(fileContent);
-            var route = dynamicObject.Routes.First;
+            var route = dynamicObject?.Routes.First;
             return route;
         }
     }

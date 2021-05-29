@@ -1,8 +1,9 @@
 using System;
 using System.Linq.Expressions;
+using API.Base.Data.Entities.Base;
 using Dapper.FluentMap.Mapping;
 
-namespace API.Base.Data.RequestModels.Base
+namespace API.Base.Data.Dapper.Mapping
 {
     public abstract class AbstractEntityMap<TEntity> : EntityMap<TEntity> where TEntity : AbstractEntity
     {

@@ -1,8 +1,8 @@
 using System;
-using API.Base.Realtime.Infrastructure;
+using API.Base.Api.Realtime.Infrastructure;
 using Microsoft.AspNetCore.SignalR;
 
-namespace API.Base.Realtime.Hubs
+namespace API.Base.Api.Realtime.Hubs
 {
     using THub = ExampleHub;
     using TMessageModel = String;

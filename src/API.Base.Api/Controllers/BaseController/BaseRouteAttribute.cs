@@ -5,6 +5,9 @@ namespace API.Base.Api.Controllers.BaseController
 {
     public abstract class BaseRouteAttribute : Attribute, IRouteTemplateProvider
     {
+        protected string apiVersionTemplate => "v{version:apiVersion}";
+        protected string controllerTemplate => "[controller]";
+        protected abstract string routeTemplate { get; }
         public abstract string Name { get; }
         public int? Order => 1;
 
@@ -17,10 +20,6 @@ namespace API.Base.Api.Controllers.BaseController
                 return $"{apiVersionTemplate}/{controllerTemplate}";
             }
         }
-
-        protected string apiVersionTemplate => "v{version:apiVersion}";
-        protected string controllerTemplate => "[controller]";
-        protected abstract string routeTemplate { get; }
     }
 
     public class ApiRouteAttribute : BaseRouteAttribute

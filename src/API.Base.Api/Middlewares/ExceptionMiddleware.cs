@@ -13,8 +13,8 @@ namespace API.Base.Api.Middlewares
 {
     public class ExceptionMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly ILogger _logger = Log.ForContext<ExceptionMiddleware>();
+        private readonly RequestDelegate _next;
 
         public ExceptionMiddleware(RequestDelegate next)
         {

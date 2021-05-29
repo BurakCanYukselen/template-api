@@ -1,6 +1,6 @@
 using System.Data.SqlClient;
 
-namespace API.Base.Data.Connections.Abstract
+namespace API.Base.Data.Dapper.Abstract
 {
     public interface IDBConnection
     {
@@ -11,13 +11,14 @@ namespace API.Base.Data.Connections.Abstract
     public abstract class DBConnection : IDBConnection
     {
         private readonly string _connectionString;
-        public IDBOperatable DB { get; }
 
         public DBConnection(string connectionString)
         {
             _connectionString = connectionString;
             DB = new DBOperatable(this);
         }
+
+        public IDBOperatable DB { get; }
 
         public SqlConnection GetConnection()
         {

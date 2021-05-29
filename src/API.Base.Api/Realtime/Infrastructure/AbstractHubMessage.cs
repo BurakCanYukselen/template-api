@@ -1,4 +1,4 @@
-namespace API.Base.Realtime.Infrastructure
+namespace API.Base.Api.Realtime.Infrastructure
 {
     public class AbstractHubMessage<TMessage, TConncetionKey>
     {

@@ -1,12 +1,12 @@
 using API.Base.Api.Extensions.ApplicationBuilderExtensions;
 using API.Base.Api.Extensions.ServiceCollectionExtensions;
 using API.Base.Api.Middlewares;
+using API.Base.Api.Realtime.Hubs;
 using API.Base.Core.Behaviors;
 using API.Base.Core.Settings;
 using API.Base.Data;
-using API.Base.Data.Connections;
+using API.Base.Data.Dapper;
 using API.Base.External;
-using API.Base.Realtime.Hubs;
 using API.Base.Service;
 using FluentValidation;
 using MediatR;

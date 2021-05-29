@@ -1,5 +1,5 @@
 using System;
-using API.Base.Data.Connections.Abstract;
+using API.Base.Data.Dapper.Abstract;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace API.Base.Api.Extensions.ServiceCollectionExtensions

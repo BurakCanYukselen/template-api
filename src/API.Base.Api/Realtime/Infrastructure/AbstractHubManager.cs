@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using API.Base.Core.Extensions;
 using Microsoft.AspNetCore.SignalR;
 
-namespace API.Base.Realtime.Infrastructure
+namespace API.Base.Api.Realtime.Infrastructure
 {
     public abstract class AbstractHubManager<THub, THubMessage, TConnections, TConnectionKey>
         where THub : Hub
         where TConnections : ConnectionMapping<TConnectionKey>
     {
-        private readonly IHubContext<THub> _hubContext;
         private readonly TConnections _connections;
+        private readonly IHubContext<THub> _hubContext;
 
         public AbstractHubManager(IHubContext<THub> hubContext, TConnections connections)
         {

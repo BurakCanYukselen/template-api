@@ -2,8 +2,6 @@ namespace API.Base.Core.Models
 {
     public class ApiResponse<TData> : BaseResponse
     {
-        public TData Result { get; }
-
         public ApiResponse(TData result)
         {
             Result = result;
@@ -12,5 +10,7 @@ namespace API.Base.Core.Models
         public ApiResponse()
         {
         }
+
+        public TData Result { get; }
     }
 }

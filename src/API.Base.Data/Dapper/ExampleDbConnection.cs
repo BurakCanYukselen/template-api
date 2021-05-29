@@ -1,6 +1,6 @@
-using API.Base.Data.Connections.Abstract;
+using API.Base.Data.Dapper.Abstract;
 
-namespace API.Base.Data.Connections
+namespace API.Base.Data.Dapper
 {
     public interface IExampleDbConnection : IDBConnection
     {
