@@ -1,24 +1,15 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine3.12 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+FROM mcr.microsoft.com/dotnet/core/sdk:5.0.300-alpine3.13 AS build_env
+FROM mcr.microsoft.com/dotnet/core/aspnet:5.0.6-alpine3.13 AS run_env
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine3.12 AS build
+FROM build_env
+ENV PROJECT_NAME="API.Base.Api"
 WORKDIR /app
-COPY ./src/API.Base.Api/API.Base.Api.csproj ./src/API.Base.Api/
-COPY ./src/API.Base.Core/API.Base.Core.csproj ./src/API.Base.Core/
-COPY ./src/API.Base.Data/API.Base.Data.csproj ./src/API.Base.Data/
-COPY ./src/API.Base.External/API.Base.External.csproj ./src/API.Base.External/
-COPY ./src/API.Base.Realtime/API.Base.Realtime.csproj ./src/API.Base.Realtime/
-COPY ./src/API.Base.Service/API.Base.Service.csproj ./src/API.Base.Service/
-RUN dotnet restore src/API.Base.Api/API.Base.Api.csproj
 COPY . .
-RUN dotnet build src/API.Base.Api/API.Base.Api.csproj -c Release -o /app/build
+RUN dotnet restore src/$PROJECT_NAME/$PROJECT_NAME.csproj
+RUN dotnet publish src/$PROJECT_NAME/$PROJECT_NAME.csproj -c Release -o /app/publish
 
-FROM build AS publish
-RUN dotnet publish src/API.Base.Api/API.Base.Api.csproj -c Release -o /app/publish
-
-FROM base AS final
+FROM run_env
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
+EXPOSE 80
 ENTRYPOINT ["dotnet", "API.Base.Api.dll"]
