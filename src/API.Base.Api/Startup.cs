@@ -6,11 +6,13 @@ using API.Base.Core.Behaviors;
 using API.Base.Core.Settings;
 using API.Base.Data;
 using API.Base.Data.Dapper;
+using API.Base.Data.EF.Context;
 using API.Base.External;
 using API.Base.Service;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -47,6 +49,11 @@ namespace API.Base.Api
             if (!Environment.IsProduction())
                 services.RegisterSwagger(appSetting.Swagger.AvailableVersions);
 
+            services.AddDbContext<APIBaseContext>(options =>
+            {
+                options.UseNpgsql(appSetting.ConnectionStrings.ExampleDbConnection, configure => configure.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+                options.UseSnakeCaseNamingConvention();
+            });
             services.RegisterExternalService<IExampleExternalService, ExampleExternalService, ExampleExternalServiceHttpClient>(appSetting.ExternalServices.ExampleExternalService);
             services.RegisterDbConnection<IExampleDbConnection, ExampleDbConnection>(appSetting.ConnectionStrings.ExampleDbConnection);
             services.RegisterSignalRManager<ExampleHubManager, ExampleConnection>();
