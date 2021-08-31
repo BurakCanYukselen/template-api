@@ -18,5 +18,31 @@ namespace API.Base.Api.Extensions
 
             return executor.ExecuteAsync(actionContext, result);
         }
+        
+        public static TValue GetFromActionArguments<TValue>(this ActionExecutingContext context, params string[] keys)
+        {
+            var value = context.ActionArguments.FirstOrDefault(p => keys.Contains(p.Key, StringComparer.InvariantCultureIgnoreCase)).Value;
+            if (value == null)
+                return default;
+            if (typeof(TValue) == typeof(Guid))
+            {
+                var guid = new Guid(value.ToString());
+                return (TValue) Convert.ChangeType(guid, typeof(TValue));
+            }
+
+            return (TValue) value;
+        }
+
+        public static TService GetService<TService>(this ActionExecutingContext context)
+        {
+            var service = context.HttpContext.GetService<TService>();
+            return service;
+        }
+
+        public static TService GetService<TService>(this HttpContext context)
+        {
+            var service = context.RequestServices.GetService<TService>();
+            return service;
+        }
     }
 }
