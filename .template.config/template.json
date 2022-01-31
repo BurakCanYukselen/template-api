@@ -8,5 +8,14 @@
     "language": "C#"
   },
   "sourceName": "API.Base",
-  "preferNameDirectory": true
+  "preferNameDirectory": true,
+  "sources": [
+    {
+      "exclude": [ 
+        "**/template.config/**",
+        "**/.git/**",
+        "**/.gitignore"
+      ]
+    }
+  ]
 }
