@@ -55,6 +55,7 @@ namespace API.Base.Core.Extensions
             }
         }
 
+        // TODO: Add nuget package
         // public static bool ValidateImageSize(this byte[] image, int width, int height)
         // {
         //     using (var stream = new MemoryStream(image))
