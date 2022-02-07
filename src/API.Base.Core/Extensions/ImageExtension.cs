@@ -55,15 +55,15 @@ namespace API.Base.Core.Extensions
             }
         }
 
-        public static bool ValidateImageSize(this byte[] image, int width, int height)
-        {
-            using (var stream = new MemoryStream(image))
-            using (var imageFromStream = System.Drawing.Image.FromStream(stream))
-            {
-                if (imageFromStream.Height <= height && imageFromStream.Width <= width)
-                    return true;
-                return false;
-            }
-        }
+        // public static bool ValidateImageSize(this byte[] image, int width, int height)
+        // {
+        //     using (var stream = new MemoryStream(image))
+        //     using (var imageFromStream = System.Drawing.Image.FromStream(stream))
+        //     {
+        //         if (imageFromStream.Height <= height && imageFromStream.Width <= width)
+        //             return true;
+        //         return false;
+        //     }
+        // }
     }
 }
