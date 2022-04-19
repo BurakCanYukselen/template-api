@@ -12,7 +12,7 @@
   "sources": [
     {
       "exclude": [ 
-        "**/template.config/**",
+        "**/.template.config/**",
         "**/.git/**",
         "**/.gitignore"
       ]
